@@ -1,0 +1,21 @@
+Training RTOS (Real Time Operating System) with ESP32S
+
+introduction: 
+Blinky.ino
+>   create 3 task utk blink led dgn delay berbeda-beda
+>   perlu rangkai 3 led utk melihat task bekerja 
+    scr preemptive
+>   operator ^ utk XOR -> digunakan utk toggle
+>   for(;;) -> sama dgn while(1)
+>   ? maksud dari stack high water mark
+
+task: 
+Task1.ino 
+>   create 2 task : serial print 
+>   ubah baud rate jadi 300 agar serial print lebih lambat
+>   task dapat disuspend dan resume tergantung kebutuhan
+>   setelah task di delete, maka task tidak akan dieksekusi
+    lagi
+>   ? perbedaan eksekusi task dgn prioritas yg berbeda
+
+

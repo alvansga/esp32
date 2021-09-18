@@ -10,9 +10,9 @@ struct s_led {
 };
 
 static s_led leds[3] = {
-    {LED1, 0, 500, 0},
-    {LED2, 0, 200, 0},
-    {LED3, 0, 750, 0}
+    {LED1, 0, 1500, 0},
+    {LED2, 0, 500, 0},
+    {LED3, 0, 1000, 0}
 };
 
 static void led_task_func(void *argp) {

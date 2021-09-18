@@ -34,7 +34,13 @@ void startTask1(void *parameter) {
 
 // Task: print to Serial Terminal with higher priority
 void startTask2(void *parameter) {
+  int count = 0;
   while (1) {
+    count++;
+    if(count == 30){
+      Serial.print('\n');
+      count = 0;
+    }
     Serial.print('*');
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
@@ -73,7 +79,7 @@ void setup() {
                           "Task 2",
                           1024,
                           NULL,
-                          2,
+                          10,
                           &task_2,
                           app_cpu);
 }
@@ -81,16 +87,16 @@ void setup() {
 void loop() {
 
   // Suspend the higher priority task for some intervals
-  for (int i = 0; i < 3; i++) {
-    vTaskSuspend(task_2);
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-    vTaskResume(task_2);
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-  }
+  // for (int i = 0; i < 3; i++) {
+  //   vTaskSuspend(task_2);
+  //   vTaskDelay(2000 / portTICK_PERIOD_MS);
+  //   vTaskResume(task_2);
+  //   vTaskDelay(2000 / portTICK_PERIOD_MS);
+  // }
 
-  // Delete the lower priority task
-  if (task_1 != NULL) {
-    vTaskDelete(task_1);
-    task_1 = NULL;
-  }
+  // // Delete the lower priority task
+  // if (task_1 != NULL) {
+  //   vTaskDelete(task_1);
+  //   task_1 = NULL;
+  // }
 }
