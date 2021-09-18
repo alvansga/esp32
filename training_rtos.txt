@@ -11,11 +11,20 @@ Blinky.ino
 
 task: 
 Task1.ino 
->   create 2 task : serial print 
+>   create 2 task : serial print * + serial print char dlam list
 >   ubah baud rate jadi 300 agar serial print lebih lambat
 >   task dapat disuspend dan resume tergantung kebutuhan
 >   setelah task di delete, maka task tidak akan dieksekusi
     lagi
 >   ? perbedaan eksekusi task dgn prioritas yg berbeda
+
+Task2.ino 
+>   create 2 task : blink led + readserial delay utk blink led
+>   menggunakan global variabel utk sync variabel delay antar 2 task
+>   led built in utk ESP-WROOM-32 [board WEMOS-LOLIN-32] ada di gpio 2
+>   task default [setup() + loop()] dihabus dgn vTaskDelete(NULL)
+    setelah setup() selesai
+
+
 
 

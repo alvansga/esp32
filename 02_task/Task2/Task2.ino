@@ -12,7 +12,7 @@
 static const uint8_t buf_len = 20;
 
 // Pins
-static const int led_pin = LED_BUILTIN;
+static const int led_pin = 2;//LED_BUILTIN;
 
 // Globals
 static int led_delay = 500;   // ms
@@ -63,6 +63,7 @@ void readSerial(void *parameters) {
         if (idx < buf_len - 1) {
           buf[idx] = c;
           idx++;
+          Serial.println("z");
         }
       }
     }
