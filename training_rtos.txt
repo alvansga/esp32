@@ -36,5 +36,8 @@ Memory2.ino
 >   ? configASSERT 
 >   ? alokasi memori menggunakan pvPortMalloc
 
-
+Queue1.ino 
+>   task default: send queue tiap 1 detik
+>   task 1: serial print receive queue tiap 500ms
+>   QueueHandle utk sync data berupa antrian antar task
 
