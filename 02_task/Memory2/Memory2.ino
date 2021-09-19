@@ -77,16 +77,22 @@ void printMessage(void *parameters) {
 
     // Wait for flag to be set and print message
     if (msg_flag == 1) {
+      Serial.print("-----------\nmsg_ptr =");
       Serial.println(msg_ptr);
 
       // Give amount of free heap memory (uncomment if you'd like to see it)
-//      Serial.print("Free heap (bytes): ");
-//      Serial.println(xPortGetFreeHeapSize());
+     Serial.print("Free heap (bytes): ");
+     Serial.println(xPortGetFreeHeapSize());
 
       // Free buffer, set pointer to null, and clear flag
       vPortFree(msg_ptr);
       msg_ptr = NULL;
       msg_flag = 0;
+      Serial.print("after free buffer:\n msg_ptr = ");
+      Serial.println(msg_ptr);
+
+      Serial.print("Free heap (bytes): ");
+     Serial.println(xPortGetFreeHeapSize());
     }
   }
 }

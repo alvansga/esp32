@@ -26,5 +26,15 @@ Task2.ino
     setelah setup() selesai
 
 
+Memory1.ino 
+>   ? pvPortMalloc sudah penuh, cara vPortFree() utk free heap memory
+
+Memory2.ino 
+>   terlihat free heap berkurang saat pointer message mendapat characters
+>   fungsi vPortFree utk free heap 
+>   menggunakan global var utk synchron antar task (flag msg_flag)
+>   ? configASSERT 
+>   ? alokasi memori menggunakan pvPortMalloc
+
 
 

@@ -17,6 +17,8 @@ void testTask(void *parameter) {
     }
     //Serial.println(b[0]);
 
+    Serial.println();
+
     // Print out remaining stack memory (words)
     Serial.print("High water mark (words): ");
     Serial.println(uxTaskGetStackHighWaterMark(NULL));
@@ -30,14 +32,17 @@ void testTask(void *parameter) {
     if (ptr == NULL) {
       Serial.println("Not enough heap.");
       vPortFree(NULL);
+      vPortFree(ptr);
     } else {
       
       // Do something with the memory so it's not optimized out by the compiler
       for (int i = 0; i < 1024; i++) {
         ptr[i] = 3;
+        // Serial.print("z");
       }
     }
 
+    Serial.println();
     // Print out number of free heap memory bytes after malloc
     Serial.print("Heap after malloc (bytes): "); 
     Serial.println(xPortGetFreeHeapSize());
