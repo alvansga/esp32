@@ -5,6 +5,8 @@
   static const BaseType_t app_cpu = 1;
 #endif
 
+#define LED_BUILTIN 12
+
 // Settings
 static const uint8_t buf_len = 255;     // Size of buffer to look for command
 static const char command[] = "delay "; // Note the space!
@@ -47,6 +49,7 @@ void doCLI(void *parameters) {
 
     // See if there's a message in the queue (do not block)
     if (xQueueReceive(msg_queue, (void *)&rcv_msg, 0) == pdTRUE) {
+      // Message received
       Serial.print(rcv_msg.body);
       Serial.println(rcv_msg.count);
     }
@@ -55,6 +58,7 @@ void doCLI(void *parameters) {
     if (Serial.available() > 0) {
       c = Serial.read();
 
+      if (idx == 0) Serial.print("@zra: $ ");
       // Store received character to buffer if not over buffer limit
       if (idx < buf_len - 1) {
         buf[idx] = c;
@@ -110,7 +114,7 @@ void blinkLED(void *parameters) {
     if (xQueueReceive(delay_queue, (void *)&led_delay, 0) == pdTRUE) {
 
       // Best practice: use only one task to manage serial comms
-      strcpy(msg.body, "Message received ");
+      strcpy(msg.body, "Message received: ");
       msg.count = 1;
       xQueueSend(msg_queue, (void *)&msg, 10);
     }

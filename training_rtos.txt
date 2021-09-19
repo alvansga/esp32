@@ -41,3 +41,15 @@ Queue1.ino
 >   task 1: serial print receive queue tiap 500ms
 >   QueueHandle utk sync data berupa antrian antar task
 
+Queue2.ino 
+>   define LED_BUILTIN 12
+>   create 2 task: 
+    task CLI: receive queue msg,
+        read Serial ,
+        print Serial,
+        send queue delay,
+
+    blink LED: receive queue msg, 
+        send queue msg.count,
+        blink LED default 500ms, 
+        send queue jika counter mencapai 100
