@@ -53,3 +53,8 @@ Queue2.ino
         send queue msg.count,
         blink LED default 500ms, 
         send queue jika counter mencapai 100
+
+Queue3.ino 
+>   Queue1 + display (modif pakai lcd16x2 - LiquidCrystal.h)
+>   ? cek jika send queue lebih cepat dibanding receive queue
+

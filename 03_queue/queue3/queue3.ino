@@ -1,4 +1,16 @@
+
+//  select display --------------
+#define DISPLAY_TM1637 0
+#define DISPLAY_LIQUIDCRYSTAL 1
+// ------------------------------
+
+#if DISPLAY_TM1637
 #include <TM1637Display.h>
+
+#elif DISPLAY_LIQUIDCRYSTAL
+#include <LiquidCrystal.h>
+
+#endif
 
 // Use only core 1 for demo purposes
 #if CONFIG_FREERTOS_UNICORE
@@ -7,10 +19,16 @@ static const BaseType_t app_cpu = 0;
 static const BaseType_t app_cpu = 1;
 #endif
 
+#if DISPLAY_TM1637
 #define CLK 18                   //Set the CLK pin connection to the display
 #define DIO 23                   //Set the DIO pin connection to the display
 TM1637Display display(CLK, DIO); //set up the 4-Digit Display.
 
+#elif DISPLAY_LIQUIDCRYSTAL
+const int rs=32 , en=33 , d4=25 , d5=26, d6=27, d7=14; // pin Katoda ke GND, pin Anoda ke Vin, pin Vdd ke Vin, pin Vss ke GND, pin RW ke GND
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+#endif
 // Settings
 static const uint8_t msg_queue_len = 5;
 
@@ -25,10 +43,14 @@ void printMessages(void *parameters)
 {
 
     int item;
-
+#if DISPLAY_TM1637
     display.setBrightness(3);
     display.clear();
 
+#elif DISPLAY_LIQUIDCRYSTAL
+    lcd.clear();
+    lcd.begin(0,0);
+#endif
     // Loop forever
     while (1)
     {
@@ -37,7 +59,14 @@ void printMessages(void *parameters)
         if (xQueueReceive(msg_queue, (void *)&item, 0) == pdTRUE)
         {
             Serial.println(item);
+#if DISPLAY_TM1637
             display.showNumberDec(item, true);
+
+#elif DISPLAY_LIQUIDCRYSTAL
+            lcd.setCursor(0,1);
+            lcd.print("angka: ");
+            lcd.print(item);
+#endif
         }
         //Serial.println(item);
 
