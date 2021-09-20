@@ -66,3 +66,12 @@ mvc.ino
     Model (process) : receive queue, mengolah data temp (membagi 3 kondisi temp),send queue ke task display 
     Visual (display/output) : receive queue, berupa blink led dgn 3 variasi delay dgn masing2 kondisi temp 
     Controller (input) : ambil data dari serial read, send queue ke task process
+
+timer1.ino
+>   create 2 timer software menggunakan 1 fungsi callback (dibedakan berdasarkan timer id)
+>   saat create dapat memilih utk auto reload atau tidak
+>   setelah timer dicreate, timer perlu di start
+
+timer 2.ino
+>   create 1 task: read serial , jika serial available , echo serial, start timer dan nyalakan led 
+>   create 1 timer: matikan LED 

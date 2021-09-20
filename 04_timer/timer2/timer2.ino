@@ -12,7 +12,7 @@
 static const TickType_t dim_delay = 5000 / portTICK_PERIOD_MS;
 
 // Pins (change this if your Arduino board does not have LED_BUILTIN defined)
-static const int led_pin = LED_BUILTIN;
+static const int led_pin = 13;//LED_BUILTIN;
 
 // Globals
 static TimerHandle_t one_shot_timer = NULL;
