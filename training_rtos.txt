@@ -56,5 +56,8 @@ Queue2.ino
 
 Queue3.ino 
 >   Queue1 + display (modif pakai lcd16x2 - LiquidCrystal.h)
->   ? cek jika send queue lebih cepat dibanding receive queue
+>   cek jika send queue lebih cepat dibanding receive queue:
+    saat queue belum receive tapi sudah send queue lagi, maka send queue
+    gagal karna queue penuh (serial print akan bergantian angka
+    dan queue full)
 

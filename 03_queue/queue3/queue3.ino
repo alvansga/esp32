@@ -71,7 +71,7 @@ void printMessages(void *parameters)
         //Serial.println(item);
 
         // Wait before trying again
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -115,5 +115,5 @@ void loop()
     num++;
 
     // Wait before trying again
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
 }
