@@ -5,9 +5,9 @@ static const BaseType_t app_cpu = 0;
 static const BaseType_t app_cpu = 1;
 #endif
 
-#define LED1 12
-#define LED2 14
-#define LED3 27
+#define LED1 14//12
+#define LED2 12//14
+#define LED3 13//27
 
 // Settings
 static const uint8_t buf_len = 255;     // Size of buffer to look for command
@@ -111,7 +111,7 @@ void process_task(void *parameters)
             if (temperature < 20)
             {
                 disp_msg.led_no = 1;
-                disp_msg.delay_val = 100;
+                disp_msg.delay_val = 1000;
             }
             else if (temperature <= 30)
             {

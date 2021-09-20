@@ -61,3 +61,8 @@ Queue3.ino
     gagal karna queue penuh (serial print akan bergantian angka
     dan queue full)
 
+mvc.ino 
+>   create 3 task:
+    Model (process) : receive queue, mengolah data temp (membagi 3 kondisi temp),send queue ke task display 
+    Visual (display/output) : receive queue, berupa blink led dgn 3 variasi delay dgn masing2 kondisi temp 
+    Controller (input) : ambil data dari serial read, send queue ke task process
