@@ -9,7 +9,7 @@
 #endif
 
 // Pins (change this if your Arduino board does not have LED_BUILTIN defined)
-static const int led_pin = LED_BUILTIN;
+static const int led_pin =13;//= LED_BUILTIN;
 
 // Globals
 static SemaphoreHandle_t bin_sem;
@@ -22,6 +22,8 @@ void blinkLED(void *parameters) {
 
   // Copy the parameter into a local variable
   int num = *(int *)parameters;
+
+  vTaskDelay(5000 / portTICK_PERIOD_MS);
 
   // Release the binary semaphore so that the creating function can finish
   xSemaphoreGive(bin_sem);

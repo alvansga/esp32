@@ -9,7 +9,7 @@
 #endif
 
 // Settings
-static const int num_tasks = 5;     // Number of tasks to create
+static const int num_tasks = 3;     // Number of tasks to create
 
 // Example struct for passing a string as a parameter
 typedef struct Message {
@@ -61,6 +61,7 @@ void setup() {
 
   // Create semaphores (initialize at 0)
   sem_params = xSemaphoreCreateCounting(num_tasks, 0);
+  // sem_params = xSemaphoreCreateBinary();
 
   // Create message to use as argument common to all tasks
   strcpy(msg.body, text);
@@ -85,6 +86,8 @@ void setup() {
   // Wait for all tasks to read shared memory
   for (int i = 0; i < num_tasks; i++) {
     xSemaphoreTake(sem_params, portMAX_DELAY);
+    Serial.print("[z] -- selesai take semaphore ke-");
+    Serial.println(i);
   }
 
   // Notify that all tasks have been created

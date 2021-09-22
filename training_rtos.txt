@@ -1,5 +1,7 @@
 Training RTOS (Real Time Operating System) with ESP32S
 
+FreeRTOS API : www.freertos.org/a00106.html
+
 introduction: 
 Blinky.ino
 >   create 3 task utk blink led dgn delay berbeda-beda
@@ -75,3 +77,16 @@ timer1.ino
 timer 2.ino
 >   create 1 task: read serial , jika serial available , echo serial, start timer dan nyalakan led 
 >   create 1 timer: matikan LED 
+
+binary.ino 
+>   binary semaphore sprti token, utk mendapat akses resource perlu mengambil token tsb
+>   create blink task: give token dan eksekusi blink 
+>   task setup: sequantial -> tunggu read serial available, create semaphore, create blink task,
+    kemudian semaphore take (blocking hingga mendapat binary semaphore)
+>   ? task loop: maksudnya allow yielding
+
+counting.ino 
+>   masuk ke task all done di tengah2 karna setelah task ke 5 selesai give semaphore,
+    bloking take semaphore di task default selesai dan eksekusi print task all done
+>   ketika diganti dgn semaphore binary, setelah create beberapa task, kemudian lgsg 
+    give beberapa semaphore shg binary semaphore habis (karna harus satu)
