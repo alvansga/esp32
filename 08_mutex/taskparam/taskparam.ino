@@ -9,7 +9,7 @@ static const BaseType_t app_cpu = 1;
 #endif
 
 // Pins (change this if your Arduino board does not have LED_BUILTIN defined)
-static const int led_pin = LED_BUILTIN;
+static const int led_pin = 13;//LED_BUILTIN;
 
 // Globals
 static SemaphoreHandle_t mutex;

@@ -131,6 +131,22 @@ demomutex.ino
     task2 bisa mengambil mutex dan resource akan dieksekusi task2 
     , setelah delay task1 tidak bisa mengmbil resource karna mutex sudah diambil oleh task2 
 
+racecondition.ino 
+>   demomutex.ino tanpa penggunaan mutex 
+>   global variabel nilai increment antara task1 dan task2 tidak cocok
+    karna dipakai scr bersamaan tanpa adanya sinkronisasi
+>   saat task1 sudah mengcounting shared_var hingga 100,
+    task2 baru mengcounting hingga 96, padahal sama2 menggunakan shared_var yg sama 
+    karna ada delay random antara 100~500. menunjukkan bahwa shared_var yg digunakan bersama,
+    bisa tidak synchron karna delay/lamanya suatu task mengeksekusi
+>   jika delay dibuat seragam, counting bernilai sama antara task1 dan 2
+    tapi bisa bergantian antara task1 atau task2 dahulu yg dieksekusi 
+>   cek jika task1 di delay 5 detik kemudian counting berjalan kembali,
+    nilai diambil dari share_var yg sdh tercounting dari task2
 
+taskparam.ino 
+>   ? pada task loop take mutex, pada task blink give mutex, mutex bisa give dan take antar task 
+>   pada task loop, terjadi blocking ketika mutex sdh diambil oleh take mutex sblm create task
+    kemudian give mutex di dalam fungsi task blink
 
 

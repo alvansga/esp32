@@ -8,6 +8,8 @@ static const BaseType_t app_cpu = 1;
 // Globals
 static int shared_var = 0;
 
+static TaskHandle_t task_1 = NULL;
+static TaskHandle_t task_2 = NULL;
 //*****************************************************************************
 // Tasks
 
@@ -16,6 +18,7 @@ void incTask(void *parameters)
 {
 
     int local_var;
+    char taskname = *(char *)parameters;
 
     // Loop forever
     while (1)
@@ -24,11 +27,23 @@ void incTask(void *parameters)
         // Roundabout way to do "shared_var++" randomly and poorly
         local_var = shared_var;
         local_var++;
-        vTaskDelay(random(100, 500) / portTICK_PERIOD_MS);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        // vTaskDelay(random(100, 5000) / portTICK_PERIOD_MS);
         shared_var = local_var;
+
+        Serial.print(taskname);
+        Serial.print(":");
+        // Serial.println(shared_var);
 
         // Print out new shared variable
         Serial.println(shared_var);
+
+        TaskHandle_t h = xTaskGetCurrentTaskHandle();
+
+        if(shared_var == 50 && h == task_1)
+        {
+            vTaskDelay(5000 / portTICK_PERIOD_MS);
+        }
     }
 }
 
@@ -49,22 +64,24 @@ void setup()
     Serial.println();
     Serial.println("---FreeRTOS Race Condition Demo---");
 
+    char taskname1[] = "1";
+    char taskname2[] = "2";
     // Start task 1
     xTaskCreatePinnedToCore(incTask,
                             "Increment Task 1",
                             1024,
-                            NULL,
+                            (void *)&taskname1,
                             1,
-                            NULL,
+                            &task_1,
                             app_cpu);
 
     // Start task 2
     xTaskCreatePinnedToCore(incTask,
                             "Increment Task 2",
                             1024,
-                            NULL,
+                            (void *)&taskname2,
                             1,
-                            NULL,
+                            &task_2,
                             app_cpu);
 
     // Delete "setup and loop" task
