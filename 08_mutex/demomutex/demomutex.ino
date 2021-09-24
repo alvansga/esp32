@@ -12,6 +12,8 @@ static const BaseType_t app_cpu = 1;
 static int shared_var = 0;
 static SemaphoreHandle_t mutex;
 
+static TaskHandle_t task_1 = NULL;
+static TaskHandle_t task_2 = NULL;
 //*****************************************************************************
 // Tasks
 
@@ -21,6 +23,7 @@ void incTask(void *parameters)
 
     int local_var;
 
+    char taskname = *(char *)parameters;
     // Loop forever
     while (1)
     {
@@ -38,10 +41,14 @@ void incTask(void *parameters)
             // Print out new shared variable
             // This is different than in the video--print shared_var inside the
             // critical section to avoid having it be changed by the other task.
+            Serial.print(taskname);
+            Serial.print(":");
             Serial.println(shared_var);
 
             // Give mutex after critical section
             xSemaphoreGive(mutex);
+
+            if(shared_var == 200) delay(2000);
         }
         else
         {
@@ -70,24 +77,29 @@ void setup()
     // Create mutex before starting tasks
     mutex = xSemaphoreCreateMutex();
 
+    char taskname1[] = "1";
+    char taskname2[] = "2";
     // Start task 1
     xTaskCreatePinnedToCore(incTask,
                             "Increment Task 1",
                             1024,
-                            NULL,
+                            (void *)&taskname1,
                             1,
-                            NULL,
+                            &task_1,
                             app_cpu);
 
     // Start task 2
     xTaskCreatePinnedToCore(incTask,
                             "Increment Task 2",
                             1024,
-                            NULL,
+                            (void *)&taskname2,
                             1,
-                            NULL,
+                            &task_2,
                             app_cpu);
 
+    // vTaskSuspend(task_1);
+    // delay(5000);
+    // vTaskResume(task_1);
     // Delete "setup and loop" task
     vTaskDelete(NULL);
 }

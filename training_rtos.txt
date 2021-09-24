@@ -123,5 +123,14 @@ prioritydemo.ino
     task loop : receive queue, draw worm 
 >   ? pengecekan queue receive selalu pakai nilai pdPASS
 
+demomutex.ino 
+>   handle sama dgn semaphore, utk create pakai xSemaphoreCreateMutex
+>   ketika task 1 jalan, mengambil mutex sperti mengunci di task1 
+    karna task2 tidak bisa menggunakan resource karna mutex sedang diambil oleh task 1
+    ketika task1 didelay setelah memberikan mutex , 
+    task2 bisa mengambil mutex dan resource akan dieksekusi task2 
+    , setelah delay task1 tidak bisa mengmbil resource karna mutex sudah diambil oleh task2 
+
+
 
 
