@@ -90,3 +90,38 @@ counting.ino
     bloking take semaphore di task default selesai dan eksekusi print task all done
 >   ketika diganti dgn semaphore binary, setelah create beberapa task, kemudian lgsg 
     give beberapa semaphore shg binary semaphore habis (karna harus satu)
+
+mailbox.ino 
+>   create queue yg ingin dipakai bersama
+>   terdpat 2 task :
+    update: menggunakan queue overwrite utk menulis data ke mailbox 
+    read: menggunakan queue peek utk membaca data dari mailbox
+>   ? kenapa pola saat print Data Read 6x kemudian stlh written Data Read 4x
+
+priority1.ino 
+>   set loopTask dgn priority 3, kemudian create task1 dgn priority 2 (lebih rendah dari priority loopTask)
+    terlihat serial print Task1 created tereksekusi terlebih dahulu sblm Tas1 executing 
+>   task1 dgn priority 3, kemudian create task2 dgn priority 4 (lebih tinggi dari priority task1)
+    terlihat serial print Task2 executing terlebih dahulu sblm Task2 created 
+>   ? handle task 2 dibuat nullptr karna task 1 dan taskloop sudah didelete, shg nullptr blm dipakai task manapun
+
+priority2.ino 
+>   loopTask priority 1 , create task1 dgn priority 0, kemudian task1 disuspend
+    setpriority task1 jadi 3, skrg posisi priority task1 lebih tinggi dari looptask,
+    tapi karna task1 suspend jadi tidak eksekusi apa2,
+    setelah selesai 3 detik delay, task1 resume, maka task1 mulai executing
+
+prioritydemo.ino 
+>   tidak bisa dicoba karna tidak ada lcd SSD1306
+>   xTaskGetCurrentTaskHandle() utk ambil nilai task handle suatu task 
+>   ada 4 task:
+    looptask -> priority 10
+    worm1 -> 9
+    worm2 -> 8
+    worm3 -> 7
+>   task worm1,worm2,worm3 : send queue to back ,
+    task loop : receive queue, draw worm 
+>   ? pengecekan queue receive selalu pakai nilai pdPASS
+
+
+
