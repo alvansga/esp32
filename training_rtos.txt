@@ -149,4 +149,36 @@ taskparam.ino
 >   pada task loop, terjadi blocking ketika mutex sdh diambil oleh take mutex sblm create task
     kemudian give mutex di dalam fungsi task blink
 
+timerint.ino 
+>   pada looptask, setup timer utk interrupt
+    menggunakan timer divider, timer max count 1MHz 
+    setting autoreload utk trigger berulang
+>   timer interrupt akan dieksekusi tiap selang waktu
+>   ? hitungan timer , div 80, count 1000000 (berdasarkan datasheet, internal osilator 8MHz)
 
+criticalsection.ino 
+>   using spinlock at timer int 
+>   1 task dan 1 timer int 
+>   task printValues print counter dan decrement, selama delay
+    masuk timer int, increment counter 
+>   ? jika tidak pakai spinlock, reboot2 terus
+
+audio.ino 
+sample.ino 
+semaphore.ino 
+
+queuesets1.ino 
+>   create 3 task:
+    processor => priority 2 lebih tinggi dari task lain
+        queue set member handle utk mengambil queue yg sdh siap
+        blocking menunggu semaphore dari task producer_1Hz_sem
+        blocking menunggu queue dari task producer_data 
+    producer_1Hz_sem => priority 1 sama dgn task producer_data 
+        delay kemudian give semaphore 
+    producer_data => priority 1
+        increment data, kirim data ke queue, delay 
+>   eksperimen: tidak pakai queuesets member, blocking di task processor karna hanya menunggu semahore/queue 
+    dicoba priority diganti sama semua, berjalan dgn baik sama seperti dgn queuesets1 
+>   queue sets menghandle queue dari task lain (termasuk yg lebih rendah prioritynya)
+
+    

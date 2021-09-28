@@ -6,7 +6,7 @@ static const BaseType_t app_cpu = 1;
 
 static SemaphoreHandle_t one_Hz_sem;
 static QueueHandle_t data_q_handle;
-static QueueSetHandle_t data_or_sem_qs_handle;
+//static QueueSetHandle_t data_or_sem_qs_handle;
 
 void producer_1Hz_sem(void *p)
 {
@@ -36,8 +36,8 @@ void processor(void *p)
 
     while (1)
     {
-        QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(data_or_sem_qs_handle, 2000);
-        if (who_unblocked == one_Hz_sem) {
+//        QueueSetMemberHandle_t who_unblocked = xQueueSelectFromSet(data_or_sem_qs_handle, 2000);
+//        if (who_unblocked == one_Hz_sem) {
             if (xSemaphoreTake(one_Hz_sem, 0)) {
                 float avg = 0;
                 for (int i = 0; i < count; i++) {
@@ -48,25 +48,25 @@ void processor(void *p)
                 Serial.print("One Hz Average of Samples = ");
                 Serial.println(avg);
             }
-            else {
-                Serial.println("Should never happen");
-            }
+//            else {
+//                Serial.println("Should never happen");
+//            }
 
-        }
-        else if (who_unblocked == data_q_handle) {
+//        }
+//        else if (who_unblocked == data_q_handle) {
             int x;
             if (xQueueReceive(data_q_handle, &x, 0)) {
                 samples[count++] = x;
                 Serial.print("Retrieve: ");
                 Serial.println(x);
             }
-            else {
-                Serial.println("Should never happen");
-            }
-        }
-        else {
-            Serial.println("Invalid case");
-        }
+//            else {
+//                Serial.println("Should never happen");
+//            }
+//        }
+//        else {
+//            Serial.println("Invalid case");
+//        }
     }
 }
 
@@ -83,9 +83,9 @@ void setup()
 
     one_Hz_sem = xSemaphoreCreateBinary();
     data_q_handle = xQueueCreate(10, sizeof(int));
-    data_or_sem_qs_handle = xQueueCreateSet(11);
-    xQueueAddToSet(one_Hz_sem, data_or_sem_qs_handle);
-    xQueueAddToSet(data_q_handle, data_or_sem_qs_handle);
+//    data_or_sem_qs_handle = xQueueCreateSet(11);
+//    xQueueAddToSet(one_Hz_sem, data_or_sem_qs_handle);
+//    xQueueAddToSet(data_q_handle, data_or_sem_qs_handle);
 
     // Start print task
     xTaskCreatePinnedToCore(producer_1Hz_sem,
@@ -108,14 +108,16 @@ void setup()
                             "Processor",
                             2048,
                             NULL,
-                            2,
+                            1,//2,
                             NULL,
                             app_cpu);
+
+    vTaskDelete(NULL);
 }
 
 void loop()
 {
-
+    Serial.print("tidak masuk sini");
     // Wait before trying again
     vTaskDelay(1000 / portTICK_PERIOD_MS);
 }

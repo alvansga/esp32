@@ -3,7 +3,7 @@ static const uint16_t timer_divider = 80;
 static const uint64_t timer_max_count = 1000000;
 
 // Pins (change this if your Arduino board does not have LED_BUILTIN defined)
-static const int led_pin = LED_BUILTIN;
+static const int led_pin = 32;//LED_BUILTIN;
 
 // Globals
 static hw_timer_t *timer = NULL;

@@ -8,7 +8,7 @@ static const BaseType_t app_cpu = 1;
 // Settings
 static const uint16_t timer_divider = 8;
 static const uint64_t timer_max_count = 1000000;
-static const TickType_t task_delay = 2000 / portTICK_PERIOD_MS;
+static const TickType_t task_delay = 3000 / portTICK_PERIOD_MS;
 
 // Globals
 static hw_timer_t *timer = NULL;
@@ -23,9 +23,10 @@ void IRAM_ATTR onTimer()
 {
 
     // ESP-IDF version of a critical section (in an ISR)
-    portENTER_CRITICAL_ISR(&spinlock);
+//    portENTER_CRITICAL_ISR(&spinlock);
     isr_counter++;
-    portEXIT_CRITICAL_ISR(&spinlock);
+    Serial.println("z");
+//    portEXIT_CRITICAL_ISR(&spinlock);
 
     // Vanilla FreeRTOS version of a critical section (in an ISR)
     //UBaseType_t saved_int_status;
@@ -53,9 +54,9 @@ void printValues(void *parameters)
             Serial.println(isr_counter);
 
             // ESP-IDF version of a critical section (in a task)
-            portENTER_CRITICAL(&spinlock);
+//            portENTER_CRITICAL(&spinlock);
             isr_counter--;
-            portEXIT_CRITICAL(&spinlock);
+//            portEXIT_CRITICAL(&spinlock);
 
             // Vanilla FreeRTOS version of a critical section (in a task)
             //taskENTER_CRITICAL();
