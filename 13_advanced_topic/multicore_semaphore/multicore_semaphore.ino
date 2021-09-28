@@ -1,12 +1,12 @@
 // Core definitions (assuming you have dual-core ESP32)
-static const BaseType_t pro_cpu = 0;
+static const BaseType_t pro_cpu = 1;
 static const BaseType_t app_cpu = 1;
 
 // Settings
 static const uint32_t task_0_delay = 500; // Time (ms) Task 0 blocks itself
 
 // Pins
-static const int pin_1 = 12; // LED pin
+static const int pin_1 = 32;//12; // LED pin
 
 // Globals
 static SemaphoreHandle_t bin_sem;
@@ -72,7 +72,7 @@ void setup()
                             "Task 1",
                             1024,
                             NULL,
-                            1,
+                            2,
                             NULL,
                             app_cpu);
 

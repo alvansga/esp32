@@ -164,6 +164,15 @@ criticalsection.ino
 >   ? jika tidak pakai spinlock, reboot2 terus
 
 audio.ino 
+>   2 task:
+    task calc_rms: melakukan perhitungan tegangan rms 
+    task do_cli: utk read serial dan menampilkan hasil dari calc_rms
+>   input A0 menggunakan potensio, read serial dibaca di timer int, dan notify task give ke handler processing task (task cal_rms) 
+>   jika serial read "rms" maka akan serial print tegangan rata2 
+>   keluaran akan terlihat pada led 
+>   notifytask sama dgn binary semaphore tapi lebih cepat
+
+
 sample.ino 
 semaphore.ino 
 
@@ -203,4 +212,45 @@ tasknotify3.ino
 
 tasknotify4.ino 
 tasknotify5.ino 
+
+evengrp.ino
+>   3 task + 1 timer int:
+    looptask => initialize gpio pin, delay, create group event
+        create task1 dan task2, begin timer int, every delay 2000ms 
+	-> set event group bit TASK1
+    timer int => set event group bits from isr bit TASK3, check
+	task_woken
+    task1 => event groupwaits every task notify, toggle led
+    task2 => every delay 3000ms -> set bit TASK2
+>   menunggu sampai tiap bit set
+>   ? cek jika hanya salah satu bit yg di set, apakah blocking atau tidak
+
+ESP32 termasuk SMP (Symmetric Multicore)
+spinlock -> mutex, menghentikan setiap interrupt, dibuat sependek mungkin
+	, umum dipakai di SMP, cpu cek spinlock agar resource yg digunakan 
+	dipastikan hanya beroperasi di dalam spinlock, mutex utk multicore
+
+multicore_semaphore
+>	create binary semaphore
+>	create 2 task:
+	task0 => pin to cpu0 (pro_cpu), configure pin gpio, give semaphore, delay 500ms
+	task1 => pin to cpu1 (app_cpu), take semaphore (blocking until get the bin_sem), do toggle led
+>	binary semaphore bisa digunakan antar task yg berbeda core
+>	tiap core punya task idle, jika tidak ada task yg dijalankan akan masuk ke idle0 / idle1
+>   coba task1 set priority lebih tinggi, tetap berjalan dgn baik 
+    jika hal yg sama diuji di dgn core yg sama, akan selalu blocking di task1 
+
+multicore 
+>   jika hog delay terlalu lama, akan kena tash watchdog sehingga reboot
+>   2 task dgn priority yg berbeda di core berbeda, melakukan serial print,
+    hasil akan serial print bersamaan/bergantian
+>   ? tskNO_AFFINITY, taskL akan masuk ke core 0, taskH masuk ke core1
+
+streambuffer.ino
+messagebuffer.ino
+ringbuffer.ino
+
+
+* Update board espressif ke 2.0.0
+-> https://github.com/espressif/arduino-esp32/releases/download/2.0.0/package_esp32_index.json
 

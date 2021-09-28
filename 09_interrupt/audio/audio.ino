@@ -35,7 +35,7 @@ enum
 
 // Pins
 static const int adc_pin = A0;
-static const int led_pin = 15;
+static const int led_pin = 32;//15;
 
 // Message struct to wrap strings for queue
 typedef struct Message

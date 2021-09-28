@@ -13,7 +13,7 @@ static void hog_delay(uint32_t ms)
 {
     for (uint32_t i = 0; i < ms; i++)
     {
-        for (uint32_t j = 0; j < 40000; j++)
+        for (uint32_t j = 0; j < 200; j++)
         {
             asm("nop");
         }
@@ -84,7 +84,7 @@ void setup()
                             NULL,
                             1,
                             NULL,
-                            //                          pro_cpu);
+//                                                      pro_cpu);
                             tskNO_AFFINITY);
 
     // Start Task H (low priority)
@@ -94,7 +94,7 @@ void setup()
                             NULL,
                             2,
                             NULL,
-                            //                          pro_cpu);
+//                                                      app_cpu);
                             tskNO_AFFINITY);
 
     // Delete "setup and loop" task

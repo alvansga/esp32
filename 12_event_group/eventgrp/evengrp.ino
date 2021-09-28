@@ -4,9 +4,9 @@ static BaseType_t app_cpu = 0;
 static BaseType_t app_cpu = 1;
 #endif
 
-#define GPIO_LED 12
-#define GPIO_LED2 14
-#define GPIO_LED3 27
+#define GPIO_LED 25//12
+#define GPIO_LED2 33//14
+#define GPIO_LED3 32//27
 
 // define three event flag bit variable
 #define TASK1_BIT (1UL << 0UL) // zero shift for bit0
@@ -128,6 +128,6 @@ void setup()
 
 void loop()
 {
-    delay(2000);
+    delay(7000);
     xEventGroupSetBits(xEventGroup, TASK1_BIT);
 }
