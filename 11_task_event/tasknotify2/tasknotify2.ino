@@ -4,7 +4,7 @@ static BaseType_t app_cpu = 0;
 static BaseType_t app_cpu = 1;
 #endif
 
-#define GPIO_LED 12
+#define GPIO_LED 32//12
 
 static TaskHandle_t htask1;
 
@@ -26,7 +26,8 @@ static void task2(void *arg)
 
     for (;; count += 100)
     {
-        delay(500 + count);
+        delay(500);// + count);
+        printf("z:%d\n",count);
         xTaskNotifyGive(htask1);
     }
 }
@@ -69,5 +70,6 @@ void setup()
 void loop()
 {
     delay(500);
+    printf("l\n");
     xTaskNotifyGive(htask1);
 }

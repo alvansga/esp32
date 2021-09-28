@@ -4,7 +4,7 @@ static BaseType_t app_cpu = 0;
 static BaseType_t app_cpu = 1;
 #endif
 
-#define GPIO_LED 12
+#define GPIO_LED 32//12
 
 static TaskHandle_t htask1;
 

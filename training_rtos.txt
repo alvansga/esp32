@@ -181,4 +181,23 @@ queuesets1.ino
     dicoba priority diganti sama semua, berjalan dgn baik sama seperti dgn queuesets1 
 >   queue sets menghandle queue dari task lain (termasuk yg lebih rendah prioritynya)
 
-    
+tasknotify1.ino 
+>   mirip dgn semaphore binary, bedanya tasknotify dgn semaphore binary 
+>   rv = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+>   xTaskNotifyGive(htask1);
+
+tasknotify2.ino 
+>   3task:
+    looptask => create 2 task, delay, give notify 
+    task1 => take notify (blocking), toggle led 
+    task2 => delay, give notify 
+>   ? serial print tdk keluar di task 2 , --> karna tidak ada serial begin
+    gunakan printf 
+>   saat delay looptask dan task2 sama, hanya salah 1 yg bisa di take 
+
+tasknotify3.ino 
+>   ? sama dgn tasknotify2 
+
+tasknotify4.ino 
+tasknotify5.ino 
+
