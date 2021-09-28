@@ -4,7 +4,7 @@ static BaseType_t app_cpu = 0;
 static BaseType_t app_cpu = 1;
 #endif
 
-#define GPIO_LED 12
+#define GPIO_LED 32// 12
 
 static TaskHandle_t htask1;
 
@@ -33,7 +33,7 @@ static void task2(void *arg)
 
 void setup()
 {
-    int app_cpu = 0;
+//    int app_cpu = 0;
     BaseType_t rc;
 
     app_cpu = xPortGetCoreID();

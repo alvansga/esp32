@@ -196,7 +196,10 @@ tasknotify2.ino
 >   saat delay looptask dan task2 sama, hanya salah 1 yg bisa di take 
 
 tasknotify3.ino 
->   ? sama dgn tasknotify2 
+>   mirip dgn tasknotify2 
+>   ulTaskNotifyTake(pdFALSE, portMAX_DELAY); xClearCountOnExit false 
+>   int app_cpu = 0;
+>   ? toggle led terganggu task 2
 
 tasknotify4.ino 
 tasknotify5.ino 
